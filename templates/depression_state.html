@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/depression_state.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter&family=Noto+Sans&family=Rasa:wght@500&family=Rubik&display=swap" rel="stylesheet">
+    <title>Depression state</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header>Depression management</header>
+    </div>
+
+    <div class="container">
+        <div class="tab">
+            <button>
+                <a href="{{url_for('home', uid=uid)}}">User {{ uid }}</a>
+            </button>
+            <button>
+                <a href="{{url_for('state', uid=uid)}}">Depression State</a>
+            </button>
+            <button>
+                <a href="{{url_for('relation', uid=uid)}}">Relation</a>
+            </button>
+
+            <button>
+                <a href="{{url_for('recommendation', uid=uid)}}">Recommendation</a>
+            </button>
+        </div>
+        <div class="content">
+            <p>
+                <!-- Start of Depression State -->
+                {% if flag == 'depression_state' %}
+                    <div id="weekely">
+                    <p>Depression state</p>
+                    <div id="calender"></div>
+                    <script>
+                        var a_text= {{ dstate | tojson }};
+                        var xValues= {{ date | tojson }};
+                        var zValues= [{{ esm | tojson }}];
+
+                        var data=[
+                            {
+                                z:zValues,
+                                x: xValues,
+                                y:[],
+                                type:'heatmap',
+                                zmin: "-9",
+                                zmax: "9",
+                                colorbar: {
+                                    title : "Emotional state"
+                                }
+                            }
+                        ];
+                        var layout={
+                            title: "Weekly emotional state",
+                            annotations: [],
+                            yaxis: {visible: false}
+                        };
+                        var textColor="";
+                        for (i=0; i<xValues.length; i+=1){
+                            var currentvalue=(zValues[i]);
+                            var result={
+                                x:xValues[i],
+                                text : a_text[i],
+                                showarrow:false,
+                            };
+                            layout.annotations.push(result);
+                        }
+                        Plotly.newPlot('calender', data, layout);
+                    </script>
+                    <div>
+                        Average depression level : level 1<br>
+                        If you want to see detail information about each day, then click a specific day.<br>
+                    </div>
+                </div>
+                <div id="day">
+                    <p>Detail information</p>
+                    <input class="date" type="date">
+                    <div id="day-graph">
+                        <script>
+                            var data1 = {
+                                 type: 'bar',
+                                 x: [-2.1, 2, 2.7],
+                                 y: ['Valence', 'Arousal', 'Stress'],
+                                name: 'user ' + {{ uid | tojson }},
+                                orientation: 'h',
+                                };
+                            var data2={
+                                type: 'bar',
+                                 x: [3, -2, -1],
+                                 y: ['Valence', 'Arousal', 'Stress'],
+                                name: 'average',
+                                orientation: 'h',
+                            };
+                            var data=[data1, data2];
+                            var layout={
+                                barmode:'group',
+                                xaxis:{
+                                    range:[-3,3]
+                                }
+                            };
+                            Plotly.newPlot('day-graph', data,layout);
+                        </script>
+                    </div>
+                </div>
+                <!-- End of Depression State -->
+
+
+                <!-- Start of Relation -->
+                {% elif flag == 'relation' %}
+                    <div class="graph_background">
+                        <p> Relation </p>
+                        <div id='plotDiv'>
+                            <script type="text/javascript">
+                                var trace1 = {
+                                    x: {{ labels | tojson }},
+                                    y: {{ app_usage | tojson }},
+                                    name: 'Walking',
+                                    type: 'bar'
+                                };
+
+                                var trace2 = {
+                                    x: {{ labels | tojson }},
+                                    y: {{ walking | tojson }},
+                                    name: 'App',
+                                    type: 'bar'
+                                };
+
+                                var trace3 = {
+                                    x: {{ labels | tojson }},
+                                    y: {{ sleeptime | tojson }},
+                                    name: 'Sleep',
+                                    type: 'bar'
+                                };
+
+                                var trace4 = {
+                                    x: {{ labels | tojson }},
+                                    y: {{ running | tojson }},
+                                    name: 'Running',
+                                    type: 'bar'
+                                };
+
+                                var trace5 = {
+                                    x: {{ labels | tojson }},
+                                    y: {{ bicycle | tojson }},
+                                    name: 'Bicycle',
+                                    type: 'bar'
+                                };
+
+
+                                var data = [trace1, trace2, trace3, trace4, trace5];
+                                var layout = {barmode: 'group'};
+                                Plotly.newPlot('plotDiv', data, layout);
+                            </script>
+                        </div>
+                    </div>
+                <!-- End of Relation -->
+
+
+                <!-- Start of Compare -->
+
+                <!-- End of Compare -->
+
+
+                <!-- Start of Recommendation -->
+                {% elif flag == 'recommendation' %}
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {packages:['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        function drawChart() {
+                            var oldData = google.visualization.arrayToDataTable([
+                                ['Name', 'Average Time'],
+                                ['Sleeping', {{ sleep_mean | tojson }}],
+                                ['Activity', {{ activity_mean | tojson }}],
+                                ['App', {{ app_mean | tojson }}]
+                            ]);
+
+                            var newData = google.visualization.arrayToDataTable([
+                                ['Name', 'Input Time'],
+                                ['Sleeping', {{ sleeptime | tojson }}],
+                                ['Activity', {{ activitytime | tojson }}],
+                                ['App', {{ apptime | tojson }}]
+                            ]);
+
+                            var barChartDiff = new google.visualization.BarChart(document.getElementById('barchart_diff'));
+
+                            var options = { legend: { position: 'bottom' },
+                                            diff: { newData: {color: '#00DDDD', widthFactor: 0.5, tooltip:{prefix:'input time'}},
+                                                    oldData: {color: '#BBBBBB', tooltip:{prefix: 'average time'}, legend: 'Average'}
+                                            }
+                            };
+
+                            var diffData = barChartDiff.computeDiff(oldData, newData);
+
+                            barChartDiff.draw(diffData, options);
+                        }
+
+                    </script>
+
+                    <div class="graph_background">
+                        <p> Recommendation </p>
+                        <table class="columns">
+                            <tr>
+                                <td>
+                                    <div id="barchart_diff" style='width: 450px; height: 250px; display: inline-block'>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ dstatetext | tojson }} <br>
+                                    {{ sleeptext | tojson  }} <br>
+                                    {{ activitytext | tojson }} <br>
+                                    {{ apptext | tojson }} <br
+                                </td>
+                            </tr>
+                        </table>
+
+                        <fieldset >
+                        <form method="POST">
+                            <h2> Submit your state </h2>
+                            <label><b>Depression Score</b></label>
+                            <input type="text" placeholder="Enter Depression Score" name="score" required> <br>
+
+                            <label><b>Sleep</b></label>
+                            <input type="text" placeholder="Enter Sleep Time" name="sleeptime" required> <br>
+
+                            <label><b>Activity</b></label>
+                            <input type="text" placeholder="Enter Activity Time" name="activitytime" required> <br
+                            
+                            <label><b>App</b></label>
+                            <input type="text" placeholder="Enter App Using Time" name="apptime" required> <br>
+>
+                            <label><button type="submit" class="btn">Submit</button></label>
+                        </form>
+                        </fieldset>
+                        </div>
+
+                <!-- End of Recommendation -->
+
+
+                <!-- Start of Exception -->
+                {% else %}
+                    <button>
+                        <a href="{{url_for('home', uid=uid)}}">Return</a>
+                    </button>
+                {% endif %}
+                <!-- End of Exception -->
+            </p>
+        </div>
+    </div>
+</body>
+</html>

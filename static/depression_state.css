@@ -1,0 +1,174 @@
+body{
+    width:100%;
+    height:100%;
+    font-family: 'Noto Sans', sans-serif;
+    font-size:13pt;
+}
+
+header{
+    font-family: 'Bitter', serif;
+    line-height:60px;
+    height: 60px;
+    font-size: 25pt;
+    font-weight: bolder;
+}
+
+p{
+    font-family: 'Bitter', serif;
+    font-size: 20pt;
+    margin:10pt;
+}
+
+.container{
+    position: relative;
+    width:100%;
+    height:800px;
+
+}
+
+.nav{
+    display: inline-block;
+    width: 250px;
+    height:100%;
+    background-color: gray;
+
+}
+.nav_user{
+    padding:15px;
+    border:1px solid black;
+}
+.nav_compare{
+    padding:15px;
+    border:1px solid black;
+}
+
+.nav_depressionstate{
+    padding:15px;
+    border:1px solid black;
+}
+
+.nav_recommendation{
+    padding:15px;
+    border:1px solid black;
+}
+
+.nav_relation{
+    padding:15px;
+    border:1px solid black;
+}
+
+.content{
+    display: inline-block;
+    height:100%;
+    position: absolute;
+    left:250px;
+    right:0;
+    overflow:hidden;
+    background-color:lightgray;
+
+}
+
+#weekely{
+    height:50%;
+    background-color:white;
+    margin:15px;
+    border-radius:25px;
+    padding:10px;
+}
+
+#calender{
+    height:400px;
+}
+
+
+.tab{
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 30%;
+    height: 300px;
+
+}
+
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: 'Bitter', serif;
+    font-size: 15pt;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.tab a{
+    text-decoration: none;
+    color: #000000;
+}
+
+.tab a:visited{
+    text-decoration: none;
+    color: #000000;
+}
+
+#calender{
+    width:800pt;
+    height:200pt;
+}
+
+#day-graph{
+    height:250px;
+}
+
+#day{
+    height:43%;
+    background-color:white;
+    margin:15px;
+    border-radius:25px;
+    padding:5px;
+}
+
+.date{
+    margin:2pt;
+}
+
+.graph_background{
+    height: 90%;
+    width: 70%;
+    display: inline-block;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    right: 15%;
+    overflow:hidden;
+    background-color: #FFFFFF;
+}
+
+label{
+    display:inline-block;
+    width:200px;
+    margin-right:30px;
+    text-align:right;
+}
+
+input{
+
+}
+
+fieldset{
+    border:none;
+    width:500px;
+    margin:20px auto;
+}

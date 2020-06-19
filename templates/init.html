@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/init_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bitter&family=Noto+Sans&family=Rasa:wght@500&family=Rubik&display=swap" rel="stylesheet">
+    <title>Depression management</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header>Depression management</header>
+    </div>
+    <div class="container">
+        <div class="tab">
+            <button>
+                <a href="{{url_for('home', uid=uid)}}">User {{ uid }}</a>
+            </button>
+            <button>
+                <a href="{{url_for('state', uid=uid)}}">Depression State</a>
+            </button>
+            <button>
+                <a href="{{url_for('relation', uid=uid)}}">Relation</a>
+            </button>
+
+            <button>
+                <a href="{{url_for('recommendation', uid=uid)}}">Recommendation</a>
+            </button>
+        </div>
+        <div class="content">
+            <div class="sub_content" id="content_user">
+                <div id="welcome">
+                    <center>
+
+                    <div id="circle"></div>
+                    <div id ="user_name">USER {{uid}}</div>
+                    </center>
+                    <div>
+                        <center>
+                        Welcome to Depression management.<br>
+                        We'll analyze your depression state.<br>
+                        </center>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <p class="explain">
+                    Based on result of ESM, we calculate your depression state by Valence, Arousal, Stress score.
+                    (Total Score= Valence+Arousal-Stress)<br>
+                    According to Total Score, we divided into 6 emotional states.
+                    More detailed explanation of emotional state is below.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="sub_content" id="content_state">
+                <br>
+                <p id="state">Emotional State</p>
+                <table>
+                    <tr>
+                        <td class="level4">-9</td>
+                        <td class="level4">-8</td>
+                        <td class="level3">-7</td>
+                        <td class="level3">-6</td>
+                        <td class="level2">-5</td>
+                        <td class="level2">-4</td>
+                        <td class="level1">-3</td>
+                        <td class="level1">-2</td>
+                        <td class="neutral">-1</td>
+                        <td class="neutral">0</td>
+                        <td class="neutral">1</td>
+                        <td class="excited">2</td>
+                        <td class="excited">3</td>
+                        <td class="excited">4</td>
+                        <td class="excited">5</td>
+                        <td class="excited">6</td>
+                        <td class="excited">7</td>
+                        <td class="excited">8</td>
+                        <td class="excited">9</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="level4">Depression level 4</td>
+                        <td colspan="2" class="level3">Depression level 3</td>
+                        <td colspan="2" class="level2">Depression level 2</td>
+                        <td colspan="2" class="level1">Depression level 1</td>
+                        <td colspan="3" class="neutral">neutral</td>
+                        <td colspan="8" class="excited">excited</td>
+                    </tr>
+                </table>
+
+                <p>
+                    <li class="explain">Depression level 1 : Slightly depressed</li>
+                    <li class="explain">Depression level 2 : Depressed often</li>
+                    <li class="explain">Depression level 3 : Usually depressed</li>
+                    <li class="explain">Depression level 4 : Extremely depressed</li>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
