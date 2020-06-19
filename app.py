@@ -84,7 +84,7 @@ def recommendation():
                                    dstatetext='', sleeptext='', activitytext='', apptext='')
         score = float(score)
         if len(df.groupby(['ESM']).filter(lambda group: group.ESM > score)) == 0:
-            dstatetext = 'Now you are good more than ever!'
+            dstatetext = 'Now you are in the best condition!!'
             sleeptext = 'You need no recommendation for now.'
             activitytext = 'Just do as you are doing now!'
             apptext = '^____________________________^'
