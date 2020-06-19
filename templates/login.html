@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+  <h2>Sign In</h2>
+  {% if error %}
+     <div class=error><strong>Error:</strong> {{ error }}
+     </div>
+  {% endif %}
+  <form action="" method=post>
+    <dl>
+      <dt>UID:
+      <dd><input type=text name=uid size=30 value="{{request.form.uid}}">
+      <dt>Password:
+      <dd><input type=password name=password size=30>
+    </dl>
+    <div class=actions><input type=submit value="Sign In"></div>
+  </form>
+</body>
+</html>

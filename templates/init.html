@@ -13,17 +13,17 @@
     <div class="container">
         <div class="tab">
             <button>
-                <a href="{{url_for('home', uid=uid)}}">User {{ uid }}</a>
+                <a href="{{url_for('home')}}">User {{ uid }}</a>
             </button>
             <button>
-                <a href="{{url_for('state', uid=uid)}}">Depression State</a>
+                <a href="{{url_for('state')}}">Depression State</a>
             </button>
             <button>
-                <a href="{{url_for('relation', uid=uid)}}">Relation</a>
+                <a href="{{url_for('relation')}}">Relation</a>
             </button>
 
             <button>
-                <a href="{{url_for('recommendation', uid=uid)}}">Recommendation</a>
+                <a href="{{url_for('recommendation')}}">Recommendation</a>
             </button>
         </div>
         <div class="content">
@@ -96,6 +96,11 @@
                 </p>
             </div>
         </div>
+    </div>
+    <div>
+        <button>
+            <a href="{{ url_for('logout')}}"> logout </a>
+        </button>
     </div>
 </body>
 </html>

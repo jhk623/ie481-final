@@ -15,17 +15,17 @@
     <div class="container">
         <div class="tab">
             <button>
-                <a href="{{url_for('home', uid=uid)}}">User {{ uid }}</a>
+                <a href="{{url_for('home')}}">User {{ uid }}</a>
             </button>
             <button>
-                <a href="{{url_for('state', uid=uid)}}">Depression State</a>
+                <a href="{{url_for('state')}}">Depression State</a>
             </button>
             <button>
-                <a href="{{url_for('relation', uid=uid)}}">Relation</a>
+                <a href="{{url_for('relation')}}">Relation</a>
             </button>
 
             <button>
-                <a href="{{url_for('recommendation', uid=uid)}}">Recommendation</a>
+                <a href="{{url_for('recommendation')}}">Recommendation</a>
             </button>
         </div>
         <div class="content">
@@ -219,19 +219,19 @@
 
                         <fieldset >
                         <form method="POST">
-                            <h2> Submit your state </h2>
+                            <h2> Enter your condition score </h2>
                             <label><b>Depression Score</b></label>
                             <input type="text" placeholder="Enter Depression Score" name="score" required> <br>
 
-                            <label><b>Sleep</b></label>
+                            <label><b>Sleep Time</b></label>
                             <input type="text" placeholder="Enter Sleep Time" name="sleeptime" required> <br>
 
-                            <label><b>Activity</b></label>
-                            <input type="text" placeholder="Enter Activity Time" name="activitytime" required> <br
+                            <label><b>Activity Time</b></label>
+                            <input type="text" placeholder="Enter Activity Time" name="activitytime" required> <br>
                             
-                            <label><b>App</b></label>
+                            <label><b>App Using Time</b></label>
                             <input type="text" placeholder="Enter App Using Time" name="apptime" required> <br>
->
+
                             <label><button type="submit" class="btn">Submit</button></label>
                         </form>
                         </fieldset>
@@ -249,6 +249,11 @@
                 <!-- End of Exception -->
             </p>
         </div>
+    </div>
+    <div>
+        <button>
+            <a href="{{ url_for('logout')}}"> logout </a>
+        </button>
     </div>
 </body>
 </html>
