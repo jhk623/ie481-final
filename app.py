@@ -9,14 +9,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def connect_db():
     """Returns a new connection to the database."""
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(base_dir, "user.db")
+    file_path = os.path.join(base_dir, "data/user.db")
     return sqlite3.connect(file_path)
 
 
 def init_db():
     """Creates the database tables."""
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(base_dir, "schema.sql")
+    file_path = os.path.join(base_dir, "data/schema.sql")
     print(file_path)
     with closing(connect_db()) as db:
         with app.open_resource(file_path, mode='r') as f:
@@ -28,7 +28,7 @@ app = Flask(__name__)
 app.secret_key = "ie481-final"
 init_db()
 
-combined = pd.read_csv('combined.csv', delimiter=',', encoding='utf-8')
+combined = pd.read_csv('./data/combined.csv', delimiter=',', encoding='utf-8')
 combined = combined.drop(columns=['Unnamed: 0'])
 sleepTime = combined.sleeptime.values.tolist()
 for i in range(len(sleepTime)):
