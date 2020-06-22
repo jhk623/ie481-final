@@ -29,82 +29,158 @@
             </button>
         </div>
         <div class="content">
-            <p>
                 <!-- Start of Depression State -->
                 {% if flag == 'depression_state' %}
                     <div id="weekely">
-                    <p>Depression state</p>
-                    <div id="calender"></div>
-                    <script>
-                        var a_text= {{ dstate | tojson }};
-                        var xValues= {{ date | tojson }};
-                        var zValues= [{{ esm | tojson }}];
+                        <p>Depression state</p>
+                        <div id="calender">
+                        <script>
+                            var a_text= {{ dstate | tojson }};
+                            var xValues= {{ date | tojson }};
+                            var zValues= [{{ esm | tojson }}];
+                            console.log(xValues[0]);
+                            console.log(xValues[1]);
+                            var data=[
+                                {
+                                    z:zValues,
+                                    x: xValues,
+                                    y:[],
+                                    type:'heatmap',
+                                    zmin: "-9",
+                                    zmax: "9",
+                                    colorbar: {
+                                        title : "Emotional state"
+                                    },
+                                    {#colorscale:[
+                                        [0, '#819FF7'],
+                                        [0.105, '#819FF7'],
 
-                        var data=[
-                            {
-                                z:zValues,
-                                x: xValues,
-                                y:[],
-                                type:'heatmap',
-                                zmin: "-9",
-                                zmax: "9",
-                                colorbar: {
-                                    title : "Emotional state"
+                                        [0.105, '#A9BCF5'],
+                                        [0.21, '#A9BCF5'],
+
+                                        [0.21, '#CED8F6'],
+                                        [0.315, '#CED8F6'],
+
+                                        [0.315, '#E0E6F8'],
+                                        [0.42, '#E0E6F8'],
+
+                                        [0.42, 'white'],
+                                        [0.57, 'white'],
+
+                                        [0.57, '#F5A9BC'],
+                                        [1.0, '#F5A9BC']
+                                    ]#}
                                 }
-                            }
-                        ];
-                        var layout={
-                            title: "Weekly emotional state",
-                            annotations: [],
-                            yaxis: {visible: false}
-                        };
-                        var textColor="";
-                        for (i=0; i<xValues.length; i+=1){
-                            var currentvalue=(zValues[i]);
-                            var result={
-                                x:xValues[i],
-                                text : a_text[i],
-                                showarrow:false,
+                            ];
+                            var layout={
+                                title: "Weekly emotional state",
+                                annotations: [],
+                                images : [
+                                    {#{
+                                    "x" : "2019-05-10",
+                                    "source" :"https://image.flaticon.com/icons/png/512/25/25361.png",
+                                    "sizex":1,
+                                    "sizey":1
+                                    },#}
+                                    {#{
+                                    "x" : 4,
+                                    "source" :"https://image.flaticon.com/icons/png/512/25/25361.png",
+                                    "sizex":1,
+                                    "sizey":1
+                                    }#}
+                                ],
+                                yaxis: {visible: false}
                             };
-                            layout.annotations.push(result);
-                        }
-                        Plotly.newPlot('calender', data, layout);
-                    </script>
-                    <div>
+                            var textColor="";
+                            for (i=0; i<xValues.length; i+=1){
+                                console.log(xValues[i]);
+                                var currentvalue=(zValues[i]);
+                                var image={
+                                    {#"x" : 800,
+                                    "source" :"https://image.flaticon.com/icons/png/512/25/25361.png",
+                                    "sizex":1,
+                                    "sizey":1#}
+                                };
+                                var result={
+                                    x:xValues[i],
+                                    text : a_text[i],
+
+                                    showarrow:false,
+                                };
+                                layout.annotations.push(result);
+
+                            }
+                            Plotly.newPlot('calender', data, layout);
+                        </script>
+                        </div>
                         Average depression level : level 1<br>
                         If you want to see detail information about each day, then click a specific day.<br>
                     </div>
-                </div>
+
                 <div id="day">
                     <p>Detail information</p>
                     <input class="date" type="date">
-                    <div id="day-graph">
+                    <div id="day-graph" >
                         <script>
-                            var data1 = {
-                                 type: 'bar',
-                                 x: [-2.1, 2, 2.7],
-                                 y: ['Valence', 'Arousal', 'Stress'],
-                                name: 'user ' + {{ uid | tojson }},
-                                orientation: 'h',
-                                };
-                            var data2={
-                                type: 'bar',
-                                 x: [3, -2, -1],
-                                 y: ['Valence', 'Arousal', 'Stress'],
-                                name: 'average',
-                                orientation: 'h',
+
+                            var xValues= {{ date | tojson }};
+                            var valence= {{ valence | tojson }};
+                            var arousal={{ arousal | tojson }};
+                            var stress={{ stress | tojson }};
+                            var trace1={
+                                x:xValues,
+                                y:valence,
+                                type:'scatter',
+                                name: "Valence",
+                                mode : 'lines+markers',
+                                line : {
+                                    color: "#57DB40"
+                                }
+
+
+
                             };
-                            var data=[data1, data2];
+
+                            var trace2={
+                                x:xValues,
+                                y:arousal,
+                                type:'scatter',
+                                name: "Arousal",
+                                mode : 'lines+markers',
+                                line : {
+                                    color: "#EB952C"
+                                }
+                            };
+
+                            var trace3={
+                                x:xValues,
+                                y:stress,
+                                type:'scatter',
+                                name:"Stress",
+                                mode : 'lines+markers',
+                                line : {
+                                    color: "#EB5234"
+                                }
+                            };
+
+                            var data=[trace1, trace2, trace3];
                             var layout={
-                                barmode:'group',
+                                title : "Detail scores of each day",
                                 xaxis:{
-                                    range:[-3,3]
+
+                                    rangeslider: {}
+                                },
+                                yaxis: {
+                                    title: "score",
+                                    range :[-3,3]
                                 }
                             };
                             Plotly.newPlot('day-graph', data,layout);
                         </script>
                     </div>
                 </div>
+
+
                 <!-- End of Depression State -->
 
 
@@ -248,12 +324,13 @@
                 {% endif %}
                 <!-- End of Exception -->
             </p>
-        </div>
+    </div>
     </div>
     <div>
         <button>
             <a href="{{ url_for('logout')}}"> logout </a>
         </button>
     </div>
+
 </body>
 </html>

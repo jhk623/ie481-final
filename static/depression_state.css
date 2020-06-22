@@ -59,26 +59,15 @@ p{
 
 .content{
     display: inline-block;
-    height:100%;
     position: absolute;
+    height:100%;
     left:250px;
     right:0;
-    overflow:hidden;
+    overflow:auto;
     background-color:lightgray;
 
 }
 
-#weekely{
-    height:50%;
-    background-color:white;
-    margin:15px;
-    border-radius:25px;
-    padding:10px;
-}
-
-#calender{
-    height:400px;
-}
 
 
 .tab{
@@ -123,17 +112,33 @@ p{
     color: #000000;
 }
 
+
+#weekely{
+    height:70%;
+    background-color:white;
+    margin:15px;
+    border-radius:25px;
+    padding:10px;
+}
+
+#calender{
+    height:70%;
+}
+
+
 #calender{
     width:800pt;
-    height:200pt;
+    height:300pt;
 }
 
 #day-graph{
-    height:250px;
+    height:400px;
+    width: 1200px;
+    overflow:auto;
 }
 
 #day{
-    height:43%;
+    height:70%;
     background-color:white;
     margin:15px;
     border-radius:25px;
@@ -145,15 +150,16 @@ p{
 }
 
 .graph_background{
-    height: 90%;
+    height: 70%;
     width: 70%;
     display: inline-block;
     position: absolute;
     top: 15%;
     left: 15%;
     right: 15%;
-    overflow:hidden;
+    overflow:auto;
     background-color: #FFFFFF;
+
 }
 
 label{

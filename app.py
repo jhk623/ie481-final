@@ -36,6 +36,8 @@ for i in range(len(sleepTime)):
 combined['sleeptime'] = sleepTime
 
 
+detail_score=pd.read_csv('./data/detail_score_final.csv', delimiter=',', encoding='utf-8')
+
 @app.route('/home')
 def home():
     if not g.user:
@@ -47,10 +49,14 @@ def home():
 def state():
     uid = session['uid']
     df = combined.drop(combined[combined['UID'] != uid].index)
+    score_df=detail_score.drop(detail_score[detail_score['UID']!=uid].index)
     dstate = df.d_state.values.tolist()
     esm = df.ESM.values.tolist()
     date = df.timestamp.values.tolist()
-    return render_template('depression_state.html', flag='depression_state', uid=uid, dstate=dstate, esm=esm, date=date)
+    valence=score_df.Valence.values.tolist()
+    arousal=score_df.Arousal.values.tolist()
+    stress= score_df.Stress.values.tolist()
+    return render_template('depression_state.html', flag='depression_state', uid=uid, dstate=dstate, esm=esm, date=date, valence=valence, arousal=arousal, stress=stress)
 
 
 @app.route('/relation')
