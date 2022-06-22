@@ -55,7 +55,7 @@ nbformat==5.0.4
 networkx==2.4
 notebook==6.0.3
 npm==0.1.1
-numpy==1.18.1
+numpy==1.22.0
 optional-django==0.1.0
 pandas==1.0.3
 pandocfilters==1.4.2
